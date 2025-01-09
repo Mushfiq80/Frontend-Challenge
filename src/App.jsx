@@ -2,22 +2,29 @@ import { useState } from 'react';
 import './App.css'
 
 function App() {
-  
-  // form submit validation
-  const input = document.getElementById('name');
-  const select = document.getElementById('career-path');
-  const errorMsg = document.getElementById('error-msg');
 
-  input.addEventListener("invalid" , (e) => {
-    e.preventDefault();
-    errorMsg.textContent = 'Please Enter Name';
-  })
-  select.addEventListener("invalid" , (e) => {
-    e.preventDefault();
-    errorMsg.textContent = 'Please Select Career Path';
-  })
+  // // form submit validation
+  // const input = document.getElementById('name');
+  // const select = document.getElementById('career-path');
+  // const errorMsg = document.getElementById('error-msg');
 
-  
+  // input.addEventListener("invalid" , (e) => {
+  //   e.preventDefault();
+  //   errorMsg.textContent = 'Please Enter Name';
+  // })
+  // select.addEventListener("invalid" , (e) => {
+  //   e.preventDefault();
+  //   errorMsg.textContent = 'Please Select Career Path';
+  // })
+
+  const [formFields, setFormFields] = useState([{ input: '', select: '' }]);
+
+  const handleInputChange = (index, value) => {
+    const updateFields = [...formFields];
+    updateFields[index].input = value;
+    setFormFields(updateFields);
+  }
+
 
   return (
     <>
@@ -26,32 +33,44 @@ function App() {
       <h1 className='my-6 text-2xl'>Choose career Path for your Friends</h1>
       {/* form and select box  */}
 
-      <form className='flex justify-center items-center gap-2'>
+      <form className=''>
         {/* input filed  */}
 
-        <div className='w-1/2'>
-          <input
-            type="text"
-            id='name' required
-            placeholder='Input Name'
-            className='border border-gray-300 rounded w-full p-2'
-          />
-          <p id='error-msg' className='text-red-500'></p>
+        {
+          formFields.map((field, index) => (
+            <div key={index} className='flex justify-center items-center gap-2'>
+              <div>
+                <input
+                  type='text'
+                  className='border border-gray-300 p-2'
+                  placeholder='Enter Name'
+                  value={field.input}
+                  onChange={(e) => handleInputChange(index, e.target.value)}
+                  required
+                />
+              </div>
+              {/* select box */}
+              <div>
+                <select
+                  className='border border-gray-300 p-2'
+                  required
+                >
+                  <option value=''>Select Career Path</option>
+                  <option value='Frontend Developer'>Frontend Developer</option>
+                  <option value='Backend Developer'>Backend Developer</option>
+                  <option value='Fullstack Developer'>Fullstack Developer</option>
+                  <option value='DevOps Engineer'>DevOps Engineer</option>
+                  <option value='Data Scientist'>Data Scientist</option>
+                </select>
+              </div>
+            </div>
+          ))
+        }
+        {/* buttons  add and submit */}
+        <div className=''>
+          <button className='btn btn-primary btn-sm mr-2 mt-4'>+ Add More</button>
+          <button type='submit' className='btn btn-success btn-sm'>Submit</button>
         </div>
-        {/* Select Option field */}
-
-        <div className='w-1/2'>
-          <select id='career-path' required className='border border-gray-300 w-full rounded p-2'>
-            <option value="">Select Career Path</option>
-            <option value="1">Doctor</option>
-            <option value="2">Engineer</option>
-            <option value="3">Army</option>
-            <option value="4">Scientist</option>
-          </select>
-          <p id='error-msg' className='text-red-500'></p>
-        </div>
-        {/* submit button */}
-        <button type='submit' className='bg-blue-500 text-white p-2 rounded'>Submit</button>
       </form>
     </>
   )
