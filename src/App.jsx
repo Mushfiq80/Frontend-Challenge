@@ -1,7 +1,23 @@
+import { useState } from 'react';
 import './App.css'
 
 function App() {
+  
+  // form submit validation
+  const input = document.getElementById('name');
+  const select = document.getElementById('career-path');
+  const errorMsg = document.getElementById('error-msg');
 
+  input.addEventListener("invalid" , (e) => {
+    e.preventDefault();
+    errorMsg.textContent = 'Please Enter Name';
+  })
+  select.addEventListener("invalid" , (e) => {
+    e.preventDefault();
+    errorMsg.textContent = 'Please Select Career Path';
+  })
+
+  
 
   return (
     <>
@@ -20,6 +36,7 @@ function App() {
             placeholder='Input Name'
             className='border border-gray-300 rounded w-full p-2'
           />
+          <p id='error-msg' className='text-red-500'></p>
         </div>
         {/* Select Option field */}
 
@@ -31,8 +48,10 @@ function App() {
             <option value="3">Army</option>
             <option value="4">Scientist</option>
           </select>
-          <p className='text-red-500'></p>
+          <p id='error-msg' className='text-red-500'></p>
         </div>
+        {/* submit button */}
+        <button type='submit' className='bg-blue-500 text-white p-2 rounded'>Submit</button>
       </form>
     </>
   )
