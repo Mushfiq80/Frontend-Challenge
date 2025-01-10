@@ -22,9 +22,26 @@ function App() {
   const handleInputChange = (index, value) => {
     const updateFields = [...formFields];
     updateFields[index].input = value;
+    // console.log(updateFields);
     setFormFields(updateFields);
   }
 
+  const handleSelectChange = (index, value) => {
+    const updateFields = [...formFields];
+    updateFields[index].select = value;
+    setFormFields(updateFields);
+  }
+
+  const validFields = () => {
+    const validErrors = formFields.map((field) => ({
+      input: field.input === '' ? 'Please Enter Name' : '',
+      select: field.select === '' ? 'Please Select Career Path' : '',
+    }));
+    // console.log(validErrors);
+    setFormFields(validErrors);
+
+    return !validErrors.some((field) => field.input || field.select);
+  }
 
   return (
     <>
@@ -53,8 +70,8 @@ function App() {
               <div>
                 <select
                   className='border border-gray-300 p-2'
-                  required
-                >
+                  required 
+                  onChange={(e) => handleSelectChange(index, e.target.value)}>
                   <option value=''>Select Career Path</option>
                   <option value='Frontend Developer'>Frontend Developer</option>
                   <option value='Backend Developer'>Backend Developer</option>
