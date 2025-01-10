@@ -55,6 +55,10 @@ function App() {
     }
   }
 
+  const handleAddField = (e) => {
+    e.preventDefault();
+    setFormFields([...formFields, { input: '', select: '' }]);
+  }
 
   return (
     <>
@@ -68,8 +72,9 @@ function App() {
 
         {
           formFields.map((field, index) => (
-            <div key={index} className='flex justify-center items-center gap-2'>
+            <div key={index} className='flex justify-center items-center gap-2 mb-1'>
               <div>
+                <label htmlFor='name' className='mr-2'>{index+1}</label>
                 <input
                   type='text'
                   className='border border-gray-300 p-2'
@@ -102,7 +107,7 @@ function App() {
         }
         {/* buttons  add and submit */}
         <div className=''>
-          <button className='btn btn-primary btn-sm mr-2 mt-4'>+ Add More</button>
+          <button onClick={handleAddField} className='btn btn-primary btn-sm mr-2 mt-4'>+ Add More</button>
           <button type='submit' className='btn btn-success btn-sm'>Submit</button>
         </div>
       </form>
