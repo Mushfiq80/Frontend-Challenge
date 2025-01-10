@@ -55,7 +55,7 @@ function App() {
 
   return (
     <>
-      <h1 className='text-2xl font-semibold'>Frontend Developer Challenge for 6sense Technologies</h1>
+      <h1 className='text-3xl font-semibold'>Frontend Developer Challenge <br />for <span className='text-blue-500 font-bold'>6sense Technologies</span></h1>
 
       <h1 className='my-6 text-2xl'>Choose career Path for your Friends</h1>
       {/* form and select box  */}
@@ -108,7 +108,7 @@ function App() {
       </form>
 
       {/* state chnage showing in h3 tag  */}
-      <h3 className='mt-4'>Form State:</h3>
+      <h3 className='mt-4 text-xl font-semibold text-green-500'>Form State:</h3>
       {
         formFields.map((field, index) => (
           <div key={index}>
@@ -117,7 +117,7 @@ function App() {
           </div>
         ))
       }
-      <h3 className="text-lg font-semibold mt-6">Submitted Form State:</h3>
+      <h3 className="text-lg font-semibold mt-6 text-green-500">Submitted Form State:</h3>
       <table className="min-w-full rounded mt-4">
         <thead>
           <tr>
