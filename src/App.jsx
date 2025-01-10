@@ -18,6 +18,7 @@ function App() {
   // })
 
   const [formFields, setFormFields] = useState([{ input: '', select: '' }]);
+  const [errors, setErrors] = useState([]);
 
   const handleInputChange = (index, value) => {
     const updateFields = [...formFields];
@@ -38,10 +39,22 @@ function App() {
       select: field.select === '' ? 'Please Select Career Path' : '',
     }));
     // console.log(validErrors);
-    setFormFields(validErrors);
+    setErrors(validErrors);
 
     return !validErrors.some((field) => field.input || field.select);
   }
+
+  const [submittedFields, setSubmittedFields] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validFields()) {
+      console.log('Form Submitted');
+      setSubmittedFields(formFields);
+      alert('Form Submitted');
+    }
+  }
+
 
   return (
     <>
@@ -50,7 +63,7 @@ function App() {
       <h1 className='my-6 text-2xl'>Choose career Path for your Friends</h1>
       {/* form and select box  */}
 
-      <form className=''>
+      <form onSubmit={handleSubmit} className=''>
         {/* input filed  */}
 
         {
@@ -63,14 +76,15 @@ function App() {
                   placeholder='Enter Name'
                   value={field.input}
                   onChange={(e) => handleInputChange(index, e.target.value)}
-                  required
                 />
+                {errors[index]?.input && (
+                  <p className="text-red-500 text-sm mt-1">{errors[index].input}</p>
+                )}
               </div>
               {/* select box */}
               <div>
                 <select
                   className='border border-gray-300 p-2'
-                  required 
                   onChange={(e) => handleSelectChange(index, e.target.value)}>
                   <option value=''>Select Career Path</option>
                   <option value='Frontend Developer'>Frontend Developer</option>
@@ -79,6 +93,9 @@ function App() {
                   <option value='DevOps Engineer'>DevOps Engineer</option>
                   <option value='Data Scientist'>Data Scientist</option>
                 </select>
+                {errors[index]?.select && (
+                  <p className="text-red-500 text-sm mt-1">{errors[index].select}</p>
+                )}
               </div>
             </div>
           ))
@@ -89,6 +106,17 @@ function App() {
           <button type='submit' className='btn btn-success btn-sm'>Submit</button>
         </div>
       </form>
+
+      {/* state chnage showing in h3 tag  */}
+      <h3 className='mt-4'>Form State:</h3>
+      {
+        formFields.map((field, index) => (
+          <div key={index}>
+            <h3>Name {index+1}: {field.input}</h3>
+            <h3>Career Path {index+1}: {field.select}</h3>
+          </div>
+        ))
+      }
     </>
   )
 }
