@@ -3,23 +3,11 @@ import './App.css'
 
 function App() {
 
-  // // form submit validation
-  // const input = document.getElementById('name');
-  // const select = document.getElementById('career-path');
-  // const errorMsg = document.getElementById('error-msg');
-
-  // input.addEventListener("invalid" , (e) => {
-  //   e.preventDefault();
-  //   errorMsg.textContent = 'Please Enter Name';
-  // })
-  // select.addEventListener("invalid" , (e) => {
-  //   e.preventDefault();
-  //   errorMsg.textContent = 'Please Select Career Path';
-  // })
 
   const [formFields, setFormFields] = useState([{ input: '', select: '' }]);
   const [errors, setErrors] = useState([]);
 
+  
   const handleInputChange = (index, value) => {
     const updateFields = [...formFields];
     updateFields[index].input = value;
@@ -60,6 +48,11 @@ function App() {
     setFormFields([...formFields, { input: '', select: '' }]);
   }
 
+  const handleDeleteField = (index) => {
+    const updateFields = formFields.filter((field, i) => i !== index);
+    setFormFields(updateFields);
+  }
+
   return (
     <>
       <h1 className='text-2xl font-semibold'>Frontend Developer Challenge for 6sense Technologies</h1>
@@ -74,7 +67,7 @@ function App() {
           formFields.map((field, index) => (
             <div key={index} className='flex justify-center items-center gap-2 mb-1'>
               <div>
-                <label htmlFor='name' className='mr-2'>{index+1}</label>
+                <label htmlFor='name' className='mr-2'>{index + 1}</label>
                 <input
                   type='text'
                   className='border border-gray-300 p-2'
@@ -102,8 +95,10 @@ function App() {
                   <p className="text-red-500 text-sm mt-1">{errors[index].select}</p>
                 )}
               </div>
+              <button type="button" onClick={() => handleDeleteField(index)} className="text-white bg-red-500 p-2 rounded hover:bg-red-600">Delete</button>
             </div>
           ))
+
         }
         {/* buttons  add and submit */}
         <div className=''>
@@ -117,11 +112,30 @@ function App() {
       {
         formFields.map((field, index) => (
           <div key={index}>
-            <h3>Name {index+1}: {field.input}</h3>
-            <h3>Career Path {index+1}: {field.select}</h3>
+            <h3>Name {index + 1}: {field.input}</h3>
+            <h3>Career Path {index + 1}: {field.select}</h3>
           </div>
         ))
       }
+      <h3 className="text-lg font-semibold mt-6">Submitted Form State:</h3>
+      <table className="min-w-full rounded mt-4">
+        <thead>
+          <tr>
+            <th className="border p-2">#</th>
+            <th className="border p-2">Input</th>
+            <th className="border p-2">Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          {submittedFields.map((field, index) => (
+            <tr key={index}>
+              <td className="border p-2 text-center">{index + 1}</td>
+              <td className="border p-2">{field.input}</td>
+              <td className="border p-2">{field.select}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   )
 }
